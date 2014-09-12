@@ -1,0 +1,67 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+//判断是否是iPhone5
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+//重设游戏参数
+#define   ZL_RESET_GAME_NOTIFICATION  @"ZL_RESET_GAME_NOTIFICATION"
+//重新开始游戏
+#define   ZL_RESTART_GAME_NOTIFICATION  @"ZL_RESTART_GAME_NOTIFICATION"
+
+
+#define HEXCOLOR(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define ZLDEBUG
+
+#undef ZLDEBUG
+
+#ifdef ZLDEBUG
+#define ZLTRACE(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#define ZLTRACE(...) do { } while (0)
+#endif
+
+#define NNRANDOM_0_1() ((float)random()/RAND_MAX)
+
+#define random_range(low, high) (rand() % (high - low + 1)) + low
+#define frandom (float)rand() / UINT64_C(0x100000000)
+#define frandom_range(low, high) ((high - low) * frandom) + low
+
+typedef NS_ENUM(uint32_t, SKRoleCategory){
+    SKRoleCategoryBomb =1<<0,//炸弹
+    SKRoleCategoryCoin =1<<1,//金币
+    SKRoleCategoryWall =1<<3,//墙壁
+    SKRoleCategoryBird =1<<4,//小鸟
+    SKRoleCategoryBackground =1<<5,//地板
+    SKRoleCategoryEnemy =1<<6,//敌人
+    SKRoleCategoryBorder =1<<7,//边界
+    SKRoleCategoryHoney  =1<<8,
+    SKRoleCategoryWudiYaoshui=1<<9,//无敌药水
+    SKRoleCategoryBrick =1<<10,//砖块
+};
+
+#define  COIN_LINE_NUMBER   (-10)//金币行数
+//金币模式形状
+typedef NS_ENUM(uint32_t, ZLCOINMODETYPE){
+    ZLCoinModeTypeRect =0,//长方形
+    ZLCoinModeTypeArrow =1,//菱形
+    ZLCoinModeTypeSlim =2,//s形
+};
+
+#endif
+
+
